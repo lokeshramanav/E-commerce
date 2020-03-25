@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/user');
 
 const app = express();  
 
@@ -14,9 +15,7 @@ mongoose.connection.on('error', err => {
         console.log(`DB connection error: ${err.message}`)
       })
       
-app.get('/',(req,res)=>{
-    res.send('Hello World!!!');
-})
+app.use('/user',userRoutes);
 
 const port = process.env.PORT || 5500;
 
