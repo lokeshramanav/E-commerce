@@ -1,3 +1,3 @@
 exports.sayHi = (req, res)=>{
-    res.json({message:'Hello World from Node !!!'})
-}
+    res.json({message:'Hello World from Node !!!'});
+};
