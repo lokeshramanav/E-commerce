@@ -8,6 +8,8 @@ const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 const userRoutes = require('./routes/user');
 const userAftRoutes = require('./routes/userAfterAuth');
+const categoryRoutes = require('./routes/category');
+const productRoutes = require('./routes/product'); 
 
 const app = express();  
 
@@ -27,6 +29,8 @@ app.use(expressValidator());
 
 app.use('/user',userRoutes);
 app.use('/userRoutes', userAftRoutes);
+app.use('/api/category', categoryRoutes);
+app.use('/api/product', productRoutes);
 
 const port = process.env.PORT || 5500;
 
