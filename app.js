@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 dotenv.config();
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -26,6 +27,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
+app.use(cors());
 
 app.use('/user',userRoutes);
 app.use('/userRoutes', userAftRoutes);
