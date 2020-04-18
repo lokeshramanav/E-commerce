@@ -17,7 +17,7 @@ const app = express();
 
 mongoose.connect(process.env.DATABASE , 
     {useNewUrlParser: true,
-    useCreateIndex: true}).then(() => console.log('DB Connected'));
+    useCreateIndex: true}).then(() => console.log('DB Connected '));
 
 mongoose.connection.on('error', err => {
         console.log(`DB connection error: ${err.message}`)
@@ -29,8 +29,9 @@ app.use(cookieParser());
 app.use(expressValidator());
 app.use(cors());
 
-app.use('/user',userRoutes);
-app.use('/userRoutes', userAftRoutes);
+
+app.use('/api/user',userRoutes);
+app.use('/api/userRoutes', userAftRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 

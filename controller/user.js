@@ -12,7 +12,7 @@ exports.addUser = (req , res)=>{   //signup new user
        user.save((err, user)=>{
             if (err){
                 console.log(err)
-                res.status(400).json({err : errorHandler(err)});
+                res.status(400).json({error : errorHandler(err)});
             }
             else{
                 res.json({user});
@@ -31,7 +31,7 @@ exports.signin = (req, res)=>{
             })
         }
         if(!user.authenticate(password)){
-            return res.status(404).json({err: 'Email and Password dont match'})
+            return res.status(404).json({error: 'Email and Password dont match'})
         }
         //create a token
         const token = jwt.sign({_id: user.id}, process.env.JWT_SECRET)
