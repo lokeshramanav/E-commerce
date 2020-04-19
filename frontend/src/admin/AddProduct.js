@@ -44,7 +44,7 @@ const AddProduct = ()=>{
                 } else {
                     setValues({
                         ...values,
-                        categories: data,
+                        categories: data.data,
                         formData: new FormData()
                     });
                 }
