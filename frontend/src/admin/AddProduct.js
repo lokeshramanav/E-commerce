@@ -132,9 +132,12 @@ const AddProduct = ()=>{
                     onChange={handleChange("category")}
                     className="form-control" >
                     <option>Please Select</option>
-                    <option value="5e9b3eb69b701c07ad75fbde">Ink Pen</option>
-                    <option value="5e9b3f059b701c07ad75fbdf">Ball Point Pen</option>
-                    <option value="5e9bf8e92e5ddb0f5395f157">Caligraphy Pen</option>
+                    {categories &&
+                        categories.map((c, i) => (
+                            <option key={i} value={c._id}>
+                                {c.name}
+                            </option>
+                        ))}
                 </select>
             </div>
 

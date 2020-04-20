@@ -59,3 +59,24 @@ export const list = params => {
         })
         .catch(err => console.log(err));
 };
+
+export const read = (productId)=>{
+    return fetch(`/api/product/${productId}`,{
+        method:"GET"
+    })
+    .then(response=>{return response.json()})
+    .catch(err=>console.log(err))
+}
+
+export const listRelated = (productId)=>{
+
+    return fetch (`/api/product/product/relatedProducts/${productId}`, {
+        method: "GET"
+     })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            console.log( "there is an error in related Products: " + err);
+        })
+}
