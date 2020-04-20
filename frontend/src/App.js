@@ -2,6 +2,10 @@ import React , {useState, useEffect} from 'react';
 import Layout from './main/layout';
 import{getProducts} from './main/apiMain';
 import {Card} from './main/card';
+import Search from './main/search';
+
+
+
 const App = ()=>{
 
   const [productsBySell, setProductsBySell] = useState([]);
@@ -34,7 +38,9 @@ useEffect(()=>{
 },[])
 
   return (<Layout title="Home Page" description="My React Ecommnerce app" className="container-fluid">
-<h2 className="mb-4">Best Sellers</h2>
+
+<Search/>
+  <h2 className="mb-4">Best Sellers</h2>
 <div className="row">
 {productsBySell.map((product, i)=>{
   return (<Card key={i} product={product}/>)

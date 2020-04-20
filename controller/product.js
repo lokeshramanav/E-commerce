@@ -95,7 +95,7 @@ exports.create = (req,res)=>{
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, fields, files)=>{
-        console.log(fields);
+        console.log(fields); 
         if(err){
             res.status(400).json({
                 error: 'Image not uploaded'
@@ -126,7 +126,7 @@ exports.create = (req,res)=>{
         let product = new Product(fields);
 
         if (files.photo) {
-            
+
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
                     error: "Image should be less than 1mb in size"
@@ -245,3 +245,22 @@ exports.photo = (req, res, next) => {
     }
     next();
 };
+
+exports.listSearch = (req, res, next)=>{
+    const query = {};
+    if (req.query.search) {
+        query.name = { $regex: req.query.search, $options: "i" };
+        if (req.query.category && req.query.category != "All") {
+            query.category = req.query.category;
+        }
+
+        Product.find(query, (err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            res.json(products);
+        }).select("-photo");
+    }
+}
