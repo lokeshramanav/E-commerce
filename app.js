@@ -11,6 +11,7 @@ const userRoutes = require('./routes/user');
 const userAftRoutes = require('./routes/userAfterAuth');
 const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product'); 
+const braintreeRoutes = require('./routes/braintree'); 
 
 const app = express();  
 
@@ -34,6 +35,7 @@ app.use('/api/user',userRoutes);
 app.use('/api/userRoutes', userAftRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
+app.use('/api', braintreeRoutes);
 
 const port = process.env.PORT || 5500;
 
