@@ -19,6 +19,9 @@ export const AdminDashboard = ()=>{
                 <li className="list-group-item">
                 <Link className="nav-link" to="/create/products">Create Products</Link>
                 </li>
+                <li className="list-group-item">
+                <Link className="nav-link" to="/orders">View Orders</Link>
+                </li>
                 </ul>
             </div>
         )

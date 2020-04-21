@@ -3,10 +3,11 @@ import Layout from "./layout";
 import Card from "./card";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { getBraintreeClientToken , processPayment } from "./apiMain";
+import { getBraintreeClientToken , processPayment , createOrder } from "./apiMain";
 import "braintree-web";
 import DropIn from "braintree-web-drop-in-react";
 import {emptyCart} from './cartService';
+
 
 const Checkout = ({ products }) => {
 
@@ -36,6 +37,10 @@ const Checkout = ({ products }) => {
         getToken(userId, token);
     }, []);
 
+    const handleAddress = event => {
+        setData({ ...data, address: event.target.value });
+    };
+
 
     const getTotal = () => {
         return products.reduce((currentValue, nextValue) => {
@@ -56,6 +61,15 @@ const Checkout = ({ products }) => {
         <div>
             {data.clientToken !== null && products.length > 0 ? (
                 <div>
+                <div className="gorm-group mb-3">
+                        <label className="text-muted">Delivery address:</label>
+                        <textarea
+                            onChange={handleAddress}
+                            className="form-control"
+                            value={data.address}
+                            placeholder="Type your delivery address here..."
+                        />
+                    </div>
                     <DropIn
                         options={{
                             authorization: data.clientToken
@@ -67,6 +81,9 @@ const Checkout = ({ products }) => {
             ) : null}
         </div>
     );
+
+    let deliveryAddress = data.address;
+
     const buy = () => {
         let nonce;
         let getNonce = data.instance
@@ -79,11 +96,24 @@ const Checkout = ({ products }) => {
                 };
                 processPayment(userId, token, paymentData)
                     .then(response => {
-                        setData({ ...data, success: response.success });
-                        emptyCart(()=>{
-                            console.log("payment success and empty cart")
-                            window.location.reload(false);
+
+                        const createOrderData = {
+                            products: products,
+                            transaction_id: response.transaction.id,
+                            amount: response.transaction.amount,
+                            address: deliveryAddress
+                        };
+                        createOrder(userId , token , createOrderData)
+                        .then(response=>{console.log(response)
+                            setData({ ...data, success: true });
+                            emptyCart(()=>{
+                                console.log("payment success and empty cart")
+                                window.location.reload(false);
+                            })
                         })
+                        .catch(error => console.log(error))
+
+
                     })
                     .catch(error => console.log(error));
             })
